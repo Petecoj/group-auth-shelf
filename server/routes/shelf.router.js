@@ -2,9 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-/**
- * Get all of the items on the shelf
- */
+
 router.get('/', (req, res) => {
     if (req.isAuthenticated) {
     const queryText = `SELECT * FROM item;`;
@@ -18,13 +16,11 @@ router.get('/', (req, res) => {
     })
 } else {
     res.sendStatus(403);
-} // res.sendStatus(200); // For testing only, can be removed
+} 
 });
 
 
-/**
- * Add an item for the logged in user to the shelf
- */
+
 router.post('/', (req, res) => {
     console.log('got to post', req.body);
     if (req.isAuthenticated) {
@@ -75,8 +71,25 @@ router.put('/:id', (req, res) => {
  * they have added to the shelf
  */
 router.get('/count', (req, res) => {
-
+    console.log('made it to count GET');
+    
+    if (req.isAuthenticated) {
+        const queryText = 'SELECT count (person_id), username  FROM "item" RIGHT OUTER JOIN "person" ON person.id = item.person_id GROUP BY "username"';
+        pool.query(queryText)
+          .then((results) => { 
+              res.send(results.rows)
+            console.log(results.rows);
+            
+            })
+          .catch((err) => {
+            console.log('Error counting', err);
+            res.sendStatus(500);
+          });
+    } else {
+        res.sendStatus(403);
+    }
 });
+
 
 
 /**

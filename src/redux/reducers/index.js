@@ -14,11 +14,20 @@ const itemList = (state = [], action) => {
       return state;
   }
 };
+const userList = (state = [], action) =>{
+  switch(action.type){
+    case 'GET_USER_INFO':
+      return action.payload
+    default:
+      return state;
+  }
+}
 
 const store = combineReducers({
   user,
   login,
-  itemList
+  itemList,
+  userList
 });
 
 export default store;

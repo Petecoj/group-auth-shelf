@@ -67,7 +67,7 @@ addItem = () => {
 
     let itemListArray = this.props.state.itemList.map ((item, index) => {
       return <div key={index} className="card">
-                <img src = {item.image_url} alt="Item Picture"/>
+                <img src = {item.image_url} alt="Item"/>
                 <p>{item.description}</p>
                 <button onClick={()=>this.handleDelete(item)}>Delete</button> 
                 <button onClick={()=>this.handleShow()}>click</button>
