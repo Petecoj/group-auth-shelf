@@ -66,7 +66,7 @@ router.delete('/:id', (req, res) => {
  * Update an item if it's something the logged in user added
  */
 router.put('/:id', (req, res) => {
-
+    // UPDATE "crew" SET "name" = $1, "role" = $2, "ship_id"= $3 WHERE "id" = $4;
 });
 
 

@@ -14,6 +14,12 @@ const mapStateToProps = state => ({
 });
 
 class ShelfPage extends Component {
+  constructor(props){
+    super(props)
+      this.state ={ 
+        show: false
+      }
+  }
   componentDidMount() {
     this.props.dispatch({type: USER_ACTIONS.FETCH_USER})
     this.props.dispatch({type:'GET_LIST'})
@@ -31,6 +37,31 @@ class ShelfPage extends Component {
     })
 }
 
+handleShow = (event) => {
+  console.log('click', this.state.show);
+  this.setState({
+   show: this.show = !this.show
+  })
+}
+handleChangeFor = (propertyName) => {
+  return (event ) => {
+    this.setState({
+      newItem : {
+        ...this.state.newItem,
+        [propertyName] : event.target.value
+      }
+    })
+  }
+}
+
+addItem = () => {
+  this.props.dispatch({
+    type: 'POST_ITEM',
+    payload: this.state.newItem
+  })
+}
+
+
   render() {
     let content = null;
 
@@ -39,8 +70,15 @@ class ShelfPage extends Component {
                 <img src = {item.image_url} alt="Item Picture"/>
                 <p>{item.description}</p>
                 <button onClick={()=>this.handleDelete(item)}>Delete</button> 
+                <button onClick={()=>this.handleShow()}>click</button>
             </div>
-    })    
+    })   
+    
+    // if (this.show == true){
+    //  return <input placeholder="description" onChange={this.handleChangeFor("description")}/>
+    //   <input placeholder="image URL" onChange={this.handleChangeFor("imageURL")}/>
+    //   <button onClick={this.addItem}>Submit</button>
+    // }
 
 
     if (this.props.user.userName) {
@@ -49,6 +87,11 @@ class ShelfPage extends Component {
           <p>
             Info Page
           </p>
+          <div onClick={this.handleShow}>
+          <input placeholder="description" onChange={this.handleChangeFor("description")}/>
+          <input placeholder="image URL" onChange={this.handleChangeFor("imageURL")}/>
+          <button onClick={this.addItem}>Submit</button>
+          </div>
           <div>{itemListArray}</div>
         </div>
       );
@@ -58,6 +101,7 @@ class ShelfPage extends Component {
       <div>
         <Nav />
         { content }
+
       </div>
     );
   }
