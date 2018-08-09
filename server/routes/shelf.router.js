@@ -23,15 +23,39 @@ router.get('/', (req, res) => {
  * Add an item for the logged in user to the shelf
  */
 router.post('/', (req, res) => {
-
-});
+    console.log('got to post', req.body);
+    if (req.isAuthenticated) {
+        const newItem = req.body
+        const queryText = `INSERT INTO "item" ("description","image_url", "person_id") VALUES ($1,$2,$3)`
+        pool.query(queryText, [newItem.description, newItem.imageURL, req.user.id])
+            .then(() => {
+                res.sendStatus(200);
+            })
+            .catch((error) => {
+                console.log(error);
+                res.sendStatus(500)
+            })
+    } else {
+        res.sendStatus(403);
+    }
+})
 
 
 /**
  * Delete an item if it's something the logged in user added
  */
 router.delete('/:id', (req, res) => {
-
+    if (req.isAuthenticated) {
+        const queryText = 'DELETE FROM "item" WHERE id=$1';
+        pool.query(queryText, [req.params.id])
+          .then(() => { res.sendStatus(200); })
+          .catch((err) => {
+            console.log('Error deleting', err);
+            res.sendStatus(500);
+          });
+    } else {
+        res.sendStatus(403);
+    }
 });
 
 

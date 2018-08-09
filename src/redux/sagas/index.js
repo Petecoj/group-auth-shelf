@@ -1,11 +1,14 @@
-import { all } from 'redux-saga/effects';
+import { all, takeEvery, call, put as dispatch} from 'redux-saga/effects';
 import userSaga from './userSaga';
 import loginSaga from './loginSaga';
-import { takeEvery, call, put as dispatch } from '../../../node_modules/redux-saga/effects/'
 import axios from '../../../node_modules/axios';
 
 
+
+
+
 export default function* rootSaga() {
+  yield takeEvery('POST_ITEM', postItem )
   yield  takeEvery('GET_LIST',fetchList)
   yield all([
     userSaga(),
@@ -13,6 +16,7 @@ export default function* rootSaga() {
     // watchIncrementAsync()
   ]);
 }
+
 
 function* fetchList(){
   try{
@@ -25,5 +29,18 @@ function* fetchList(){
     })
   }catch(err){
     yield console.log(err);
+  }
+}
+
+function* postItem(action){
+  try{
+    console.log('in post saga', action.payload);
+    
+    yield call (axios.post, '/api/shelf', action.payload)
+    // yield put ({
+    //   type: 'GET_ITEM',  
+    // })
+  } catch(error){
+    console.log(error);
   }
 }

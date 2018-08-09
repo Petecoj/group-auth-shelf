@@ -3,12 +3,13 @@ import user from './userReducer';
 import login from './loginReducer';
 
 
+
 const itemList = (state = [], action) => {
   switch (action.type) {
     case 'GET_ITEM':
       return action.payload
     case 'POST_ITEM':
-      return state
+      return [...state, action.payload]
     default:
       return state;
   }

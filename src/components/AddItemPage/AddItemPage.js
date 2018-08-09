@@ -11,6 +11,18 @@ const mapStateToProps = state => ({
 });
 
 class AddItemPage extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      newItem: {
+        description : '',
+        imageURL: '',
+      }
+    }
+  }
+
   componentDidMount() {
     this.props.dispatch(fetchUser());
   }
@@ -26,8 +38,28 @@ class AddItemPage extends Component {
     // this.props.history.push('home');
   }
 
+  handleChangeFor = (propertyName) => {
+    return (event ) => {
+      this.setState({
+        newItem : {
+          ...this.state.newItem,
+          [propertyName] : event.target.value
+        }
+      })
+    }
+  }
+
+  addItem = () => {
+    this.props.dispatch({
+      type: 'POST_ITEM',
+      payload: this.state.newItem
+    })
+  }
+
   render() {
     let content = null;
+
+    console.log('state', this.state.newItem)
 
     if (this.props.user.userName) {
       content = (
@@ -37,6 +69,11 @@ class AddItemPage extends Component {
           >
             Welcome, { this.props.user.userName }!
           </h1>
+
+          <input placeholder="description" onChange={this.handleChangeFor("description")}/>
+          <input placeholder="image URL" onChange={this.handleChangeFor("imageURL")}/>
+          <button onClick={this.addItem}>Submit</button>
+
           <button
             onClick={this.logout}
           >
