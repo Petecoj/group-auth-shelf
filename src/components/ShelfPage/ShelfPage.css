@@ -4,8 +4,9 @@
     transition: 0.3s;
     float: left;
     margin: 35px;
-    height: 650px;
-    width: 400px;
+    height: 300px;
+    width: 200px;
+    text-align: center;
   }
   
   /* On mouse-over, add a deeper shadow */
@@ -14,7 +15,7 @@
   }
   
   /* Add some padding inside the card container */
-  .container {
-    padding: 2px 16px;
+  .center {
+    /* padding: 2px 16px; */
     text-align: center;
   }

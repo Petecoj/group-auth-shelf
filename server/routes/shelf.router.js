@@ -4,6 +4,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
+    if (req.isAuthenticated) {
     const queryText = `SELECT * FROM item;`;
     pool.query(queryText).then((results) => {
         res.send(results.rows)
@@ -13,7 +14,13 @@ router.get('/', (req, res) => {
         console.log(err);
         res.sendStatus(500);
     })
+<<<<<<< HEAD
 
+=======
+} else {
+    res.sendStatus(403);
+} // res.sendStatus(200); // For testing only, can be removed
+>>>>>>> 48bcb4ae0d0b8108d2bd153488a9fc2bf10beb63
 });
 
 
