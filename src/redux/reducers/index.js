@@ -5,8 +5,8 @@ import login from './loginReducer';
 
 const itemList = (state = [], action) => {
   switch (action.type) {
-    case 'GET_LIST':
-      return state
+    case 'GET_ITEM':
+      return action.payload
     case 'POST_ITEM':
       return state
     default:

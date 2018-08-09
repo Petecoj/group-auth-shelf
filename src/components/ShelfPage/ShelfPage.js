@@ -3,17 +3,20 @@ import { connect } from 'react-redux';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+import './ShelfPage.css';
 
 //views
 //link to the add page
 //get request
 const mapStateToProps = state => ({
   user: state.user,
+  state
 });
 
 class ShelfPage extends Component {
   componentDidMount() {
-    this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
+    this.props.dispatch({type: USER_ACTIONS.FETCH_USER})
+    this.props.dispatch({type:'GET_LIST'})
   }
 
   componentDidUpdate() {
@@ -25,11 +28,21 @@ class ShelfPage extends Component {
   render() {
     let content = null;
 
+    let itemListArray = this.props.state.itemList.map ((item, index) => {
+      return <div key={index} className="card">
+                <img src = {item.image_url} alt="Item Picture"/>
+                <p>{item.description}</p>
+                {/* <button onClick={()=>this.handleDelete(item)}>Delete</button>  */}
+            </div>
+    })    
+
+
     if (this.props.user.userName) {
       content = (
         <div>
           <p>
             Info Page
+            {itemListArray}
           </p>
         </div>
       );
