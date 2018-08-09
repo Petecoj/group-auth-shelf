@@ -14,13 +14,9 @@ router.get('/', (req, res) => {
         console.log(err);
         res.sendStatus(500);
     })
-<<<<<<< HEAD
-
-=======
 } else {
     res.sendStatus(403);
-} // res.sendStatus(200); // For testing only, can be removed
->>>>>>> 48bcb4ae0d0b8108d2bd153488a9fc2bf10beb63
+} 
 });
 
 
@@ -78,7 +74,7 @@ router.get('/count', (req, res) => {
     console.log('made it to count GET');
     
     if (req.isAuthenticated) {
-        const queryText = 'SELECT count (person_id), username  FROM "item" JOIN "person" ON person.id = item.person_id GROUP BY "username"';
+        const queryText = 'SELECT count (person_id), username  FROM "item" RIGHT OUTER JOIN "person" ON person.id = item.person_id GROUP BY "username"';
         pool.query(queryText)
           .then((results) => { 
               res.send(results.rows)
