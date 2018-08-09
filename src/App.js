@@ -9,8 +9,8 @@ import {
 import Header from './components/Header/Header';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
-import UserPage from './components/UserPage/UserPage';
-import InfoPage from './components/InfoPage/InfoPage';
+import AddItemPage from './components/AddItemPage/AddItemPage';
+import ShelfPage from './components/ShelfPage/ShelfPage';
 
 import './styles/main.css';
 
@@ -29,12 +29,12 @@ const App = () => (
           component={RegisterPage}
         />
         <Route
-          path="/user"
-          component={UserPage}
+          path="/add"
+          component={AddItemPage}
         />
         <Route
-          path="/info"
-          component={InfoPage}
+          path="/shelf"
+          component={ShelfPage}
         />
       </Switch>
     </Router>
