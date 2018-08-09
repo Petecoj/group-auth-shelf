@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Nav from '../../components/Nav/Nav';
+import { USER_ACTIONS } from '../../redux/actions/userActions';
 
-import { fetchUser } from '../../redux/actions/userActions';
-import { triggerLogout } from '../../redux/actions/loginActions';
-
+//views
+//link to the add page
+//get request
 const mapStateToProps = state => ({
   user: state.user,
 });
 
-class UserPage extends Component {
+class ShelfPage extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchUser());
+    this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
   }
 
   componentDidUpdate() {
@@ -21,27 +22,15 @@ class UserPage extends Component {
     }
   }
 
-  logout = () => {
-    this.props.dispatch(triggerLogout());
-    // this.props.history.push('home');
-  }
-
   render() {
     let content = null;
 
     if (this.props.user.userName) {
       content = (
         <div>
-          <h1
-            id="welcome"
-          >
-            Welcome, { this.props.user.userName }!
-          </h1>
-          <button
-            onClick={this.logout}
-          >
-            Log Out
-          </button>
+          <p>
+            Info Page
+          </p>
         </div>
       );
     }
@@ -56,5 +45,4 @@ class UserPage extends Component {
 }
 
 // this allows us to use <App /> in index.js
-export default connect(mapStateToProps)(UserPage);
-
+export default connect(mapStateToProps)(ShelfPage);
