@@ -6,6 +6,7 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
+    if (req.isAuthenticated) {
     const queryText = `SELECT * FROM item;`;
     pool.query(queryText).then((results) => {
         res.send(results.rows)
@@ -15,7 +16,9 @@ router.get('/', (req, res) => {
         console.log(err);
         res.sendStatus(500);
     })
-    // res.sendStatus(200); // For testing only, can be removed
+} else {
+    res.sendStatus(403);
+} // res.sendStatus(200); // For testing only, can be removed
 });
 
 

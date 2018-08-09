@@ -25,6 +25,12 @@ class ShelfPage extends Component {
     }
   }
 
+  handleDelete = (item) => {
+    this.props.dispatch({ 
+        type: 'DELETE_ITEM', payload: item.id
+    })
+}
+
   render() {
     let content = null;
 
@@ -32,7 +38,7 @@ class ShelfPage extends Component {
       return <div key={index} className="card">
                 <img src = {item.image_url} alt="Item Picture"/>
                 <p>{item.description}</p>
-                {/* <button onClick={()=>this.handleDelete(item)}>Delete</button>  */}
+                <button onClick={()=>this.handleDelete(item)}>Delete</button> 
             </div>
     })    
 
@@ -42,8 +48,8 @@ class ShelfPage extends Component {
         <div>
           <p>
             Info Page
-            {itemListArray}
           </p>
+          <div>{itemListArray}</div>
         </div>
       );
     }

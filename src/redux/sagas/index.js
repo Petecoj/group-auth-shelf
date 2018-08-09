@@ -9,6 +9,7 @@ import axios from '../../../node_modules/axios';
 
 export default function* rootSaga() {
   yield takeEvery('POST_ITEM', postItem )
+  yield takeEvery('DELETE_ITEM', deleteItem )
   yield  takeEvery('GET_LIST',fetchList)
   yield all([
     userSaga(),
@@ -17,6 +18,19 @@ export default function* rootSaga() {
   ]);
 }
 
+function* deleteItem (action){
+  console.log('deleteItem', action.payload);
+  
+  try{
+      yield call(axios.delete, `/api/shelf/${action.payload}`);
+      yield dispatch({
+          type: 'GET_LIST'
+      })   
+  } catch(err) {
+      yield console.log(err);
+      
+  }
+}
 
 function* fetchList(){
   try{
