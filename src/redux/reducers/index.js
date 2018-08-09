@@ -8,7 +8,7 @@ const itemList = (state = [], action) => {
     case 'GET_LIST':
       return state
     case 'POST_ITEM':
-      return state
+      return [...state, action.payload]
     default:
       return state;
   }
