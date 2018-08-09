@@ -3,15 +3,14 @@ import userSaga from './userSaga';
 import loginSaga from './loginSaga';
 import axios from 'axios';
 
-
-
-
-
-
-
-
-
-
+export default function* rootSaga() {
+  yield takeEvery('POST_ITEM', postItem )
+  yield all([
+    userSaga(),
+    loginSaga(),
+    // watchIncrementAsync()
+  ]);
+}
 
 function* postItem(action){
   try{
@@ -28,12 +27,5 @@ function* postItem(action){
 
 
 
-export default function* rootSaga() {
-  yield takeEvery('POST_ITEM', postItem )
-  yield all([
-    userSaga(),
-    loginSaga(),
-    // watchIncrementAsync()
-  ]);
-}
+
 
