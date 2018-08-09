@@ -30,7 +30,7 @@ class ShelfPage extends Component {
 
     let itemListArray = this.props.state.itemList.map ((item, index) => {
       return <div key={index} className="card">
-                <img src = {item.image_url} alt="Item Picture"/>
+                <img src = {item.image_url} alt="Item"/>
                 <p>{item.description}</p>
                 {/* <button onClick={()=>this.handleDelete(item)}>Delete</button>  */}
             </div>
@@ -40,10 +40,10 @@ class ShelfPage extends Component {
     if (this.props.user.userName) {
       content = (
         <div>
-          <p>
+      
             Info Page
             {itemListArray}
-          </p>
+         
         </div>
       );
     }

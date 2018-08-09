@@ -10,6 +10,8 @@ import axios from '../../../node_modules/axios';
 export default function* rootSaga() {
   yield takeEvery('POST_ITEM', postItem )
   yield  takeEvery('GET_LIST',fetchList)
+  yield takeEvery('GET_USERS', getUsers)
+
   yield all([
     userSaga(),
     loginSaga(),
@@ -43,4 +45,19 @@ function* postItem(action){
   } catch(error){
     console.log(error);
   }
+}
+function* getUsers(){
+  try{
+    console.log('made it to GET users');
+   const userInfo =  yield call (axios.get,'/api/shelf/count')
+    yield dispatch({
+      type: 'GET_USER_INFO',
+      payload: userInfo.data
+    })
+    
+  } catch(error){
+    console.log(error);
+    
+  }
+
 }
