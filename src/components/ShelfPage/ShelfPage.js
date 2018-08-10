@@ -76,7 +76,7 @@ editSubmit = () => {
                 <img src = {item.image_url} alt="Item"/>
                 <p>{item.description}</p>
                 <button onClick={()=>this.handleDelete(item)}>Delete</button> 
-                <button onClick={()=>this.handleShow(item.id)}>click</button>
+                <button onClick={()=>this.handleShow(item.id)}>Edit</button>
             </div>
     })   
     
@@ -92,8 +92,6 @@ editSubmit = () => {
           <button onClick={this.editSubmit}>Submit</button>
           <div>{itemListArray}</div>
         </div>
-
-        
       );
     } else {
       content = (
@@ -110,7 +108,6 @@ editSubmit = () => {
       <div>
         <Nav />
         { content }
-
       </div>
     );
   }
