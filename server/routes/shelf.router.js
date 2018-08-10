@@ -63,8 +63,8 @@ router.post('/', (req, res) => {
  */
 router.delete('/:id', (req, res) => {
     if (req.isAuthenticated) {
-        const queryText = 'DELETE FROM "item" WHERE id=$1';
-        pool.query(queryText, [req.params.id])
+        const queryText = 'DELETE FROM "item" WHERE id=$1 AND person_id=$2';
+        pool.query(queryText, [req.params.id, req.user.id])
             .then(() => { res.sendStatus(200); })
             .catch((err) => {
                 console.log('Error deleting', err);
