@@ -4,19 +4,20 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-    if (req.isAuthenticated) {
-    const queryText = `SELECT * FROM item;`;
-    pool.query(queryText).then((results) => {
-        res.send(results.rows)
-        console.log(results.rows);
-        
-    }).catch((err) => {
-        console.log(err);
-        res.sendStatus(500);
-    })
-} else {
-    res.sendStatus(403);
-} 
+    // if (req.isAuthenticated) {
+        const queryText = `SELECT * FROM item;`;
+        pool.query(queryText)
+            .then((results) => {
+                res.send(results.rows)
+                console.log(results.rows);
+
+            }).catch((err) => {
+                console.log(err);
+                res.sendStatus(500);
+            })
+    // } else {
+    //     res.sendStatus(403);
+    // }
 });
 
 router.get('/user', (req, res) => {
@@ -64,11 +65,11 @@ router.delete('/:id', (req, res) => {
     if (req.isAuthenticated) {
         const queryText = 'DELETE FROM "item" WHERE id=$1';
         pool.query(queryText, [req.params.id])
-          .then(() => { res.sendStatus(200); })
-          .catch((err) => {
-            console.log('Error deleting', err);
-            res.sendStatus(500);
-          });
+            .then(() => { res.sendStatus(200); })
+            .catch((err) => {
+                console.log('Error deleting', err);
+                res.sendStatus(500);
+            });
     } else {
         res.sendStatus(403);
     }
@@ -79,7 +80,20 @@ router.delete('/:id', (req, res) => {
  * Update an item if it's something the logged in user added
  */
 router.put('/:id', (req, res) => {
-    // UPDATE "crew" SET "name" = $1, "role" = $2, "ship_id"= $3 WHERE "id" = $4;
+    console.log('got to put', req.body)
+    if (req.isAuthenticated) {
+        const queryText = `Update "item" SET "description" = $1, "image_url" = $2 WHERE id=$3`;
+        pool.query(queryText, [req.body.description, req.body.imageURL, req.params.id])
+            .then(() => { res.sendStatus(200); })
+            .catch((err) => {
+                console.log('Error updating', err);
+                res.sendStatus(500);
+            });
+    } else {
+        res.sendStatus(403);
+    }
+
+
 });
 
 
@@ -89,19 +103,19 @@ router.put('/:id', (req, res) => {
  */
 router.get('/count', (req, res) => {
     console.log('made it to count GET');
-    
+
     if (req.isAuthenticated) {
         const queryText = 'SELECT count (person_id), username  FROM "item" RIGHT OUTER JOIN "person" ON person.id = item.person_id GROUP BY "username"';
         pool.query(queryText)
-          .then((results) => { 
-              res.send(results.rows)
-            console.log(results.rows);
-            
+            .then((results) => {
+                res.send(results.rows)
+                console.log(results.rows);
+
             })
-          .catch((err) => {
-            console.log('Error counting', err);
-            res.sendStatus(500);
-          });
+            .catch((err) => {
+                console.log('Error counting', err);
+                res.sendStatus(500);
+            });
     } else {
         res.sendStatus(403);
     }
