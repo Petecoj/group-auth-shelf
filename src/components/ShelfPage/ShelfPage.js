@@ -14,72 +14,79 @@ const mapStateToProps = state => ({
 });
 
 class ShelfPage extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-      this.state ={ 
-        show: false,
-        id: [],
-        editItem: [],
-      }
+    this.state = {
+      show: false,
+      id: [],
+      editItem: [],
+    }
   }
   componentDidMount() {
-    this.props.dispatch({type: USER_ACTIONS.FETCH_USER})
-    this.props.dispatch({type:'GET_LIST'})
-  }
+    // This is commented out to allow any user to view the shelf
+    // this.props.dispatch({type: USER_ACTIONS.FETCH_USER})
 
-  componentDidUpdate() {
+    this.props.dispatch({ type: 'GET_LIST' })
+  }
+  // This is commented out to allow any user to view the shelf
+  // componentDidUpdate() {
+  //   if (!this.props.user.isLoading && this.props.user.userName === null) {
+  //     this.props.history.push('home');
+  //   }
+  // }
+
+  handleDelete = (item) => {
     if (!this.props.user.isLoading && this.props.user.userName === null) {
-      this.props.history.push('home');
+      alert('You must be logged in to delete!')
+    } else {
+      this.props.dispatch({
+        type: 'DELETE_ITEM', payload: item.id
+
+      })
+    }
+  }
+  handleShow = (itemId) => {
+    console.log('click', this.state.show, itemId);
+    if (!this.props.user.isLoading && this.props.user.userName === null) {
+      alert('You must be logged in to edit items!')
+    } else {
+      this.setState({
+        show: this.show = !this.show,
+        id: itemId,
+      })
+    }
+  }
+  handleChangeFor = (propertyName) => {
+    return (event) => {
+      this.setState({
+        editItem: {
+          ...this.state.editItem,
+          [propertyName]: event.target.value
+        }
+      })
     }
   }
 
-  handleDelete = (item) => {
-    this.props.dispatch({ 
-        type: 'DELETE_ITEM', payload: item.id
-    })
-}
-
-handleShow = (itemId) => {
-  console.log('click', this.state.show, itemId);
-  this.setState({
-   show: this.show = !this.show,
-   id : itemId,
-  },
-
-)}
-
-handleChangeFor = (propertyName) => {
-  return (event ) => {
-    this.setState({
-      editItem : {
-        ...this.state.editItem,
-        [propertyName] : event.target.value
-      }
+  editSubmit = () => {
+    console.log('edit submit', this.state.editItem)
+    this.props.dispatch({
+      type: 'UPDATE_ITEM',
+      payload: this.state.editItem,
+      id: this.state.id
     })
   }
-}
-
-editSubmit = () => {
-  console.log('edit submit', this.state.editItem)
-  this.props.dispatch({
-    type: 'UPDATE_ITEM',
-    payload: this.state.editItem,
-    id: this.state.id
-  })
-}
 
   render() {
     let content = null;
 
-    let itemListArray = this.props.state.itemList.map ((item, index) => {
+    let itemListArray = this.props.state.itemList.map((item, index) => {
       return <div key={index} className="card">
                 <img src = {item.image_url} alt="Item"/>
                 <p>{item.description}</p>
                 <button onClick={()=>this.handleDelete(item)}>Delete</button> 
                 <button onClick={()=>this.handleShow(item.id)}>Edit</button>
             </div>
-    })   
-    
+    })
 
     if (this.props.user.userName && this.state.show) {
       content = (
@@ -87,8 +94,8 @@ editSubmit = () => {
           <p>
             Info Page
           </p>
-          <input placeholder="description" onChange={this.handleChangeFor("description")}/>
-          <input placeholder="image URL" onChange={this.handleChangeFor("imageURL")}/>
+          <input placeholder="description" onChange={this.handleChangeFor("description")} />
+          <input placeholder="image URL" onChange={this.handleChangeFor("imageURL")} />
           <button onClick={this.editSubmit}>Submit</button>
           <div>{itemListArray}</div>
         </div>
