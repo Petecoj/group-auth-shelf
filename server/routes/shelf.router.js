@@ -62,9 +62,7 @@ router.delete('/:id', (req, res) => {
  * Update an item if it's something the logged in user added
  */
 router.put('/:id', (req, res) => {
-    // UPDATE "crew" SET "name" = $1, "role" = $2, "ship_id"= $3 WHERE "id" = $4;
-    console.log('made it to put', req.body);
-    
+    console.log('got to put', req.body)
     if (req.isAuthenticated) {
         const queryText = `Update "item" SET "description" = $1, "image_url" = $2 WHERE id=$3`;
         pool.query(queryText, [req.body.description, req.body.imageURL, req.params.id])

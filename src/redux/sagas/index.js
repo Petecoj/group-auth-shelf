@@ -20,9 +20,9 @@ function* updateItem(action) {
   console.log('sage update', action.payload, action.id)
   try {
     yield call(axios.put, `/api/shelf/${action.id}`, action.payload);
-    // yield dispatch({
-    //   type: 'GET_LIST'
-    // })
+    yield dispatch({
+      type: 'GET_LIST'
+    })
   } catch (err) {
     yield console.log(err);
 
