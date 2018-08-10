@@ -20,6 +20,11 @@ const Nav = () => (
             User Page
           </Link>
         </li>
+        <li>
+          <Link to="/shelfTwo">
+            Specific Info Page
+          </Link>
+        </li>
       </ul>
     </div>
   </div>

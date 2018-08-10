@@ -12,6 +12,7 @@ export default function* rootSaga() {
   yield takeEvery('DELETE_ITEM', deleteItem )
   yield  takeEvery('GET_LIST',fetchList)
   yield takeEvery('GET_USERS', getUsers)
+  yield takeEvery('GET_USER_LIST', getUserList)
 
   yield all([
     userSaga(),
@@ -42,6 +43,18 @@ function* fetchList(){
     yield dispatch({
       type:'GET_ITEM',
       payload: listResponse.data
+    })
+  }catch(err){
+    yield console.log(err);
+  }
+}
+
+function* getUserList(){
+  try{
+    const userListResponse = yield call(axios.get, '/api/shelf/user')
+    yield dispatch({
+      type:'GET_ITEM',
+      payload: userListResponse.data
     })
   }catch(err){
     yield console.log(err);
