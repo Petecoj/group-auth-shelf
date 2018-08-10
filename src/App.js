@@ -11,7 +11,7 @@ import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import AddItemPage from './components/AddItemPage/AddItemPage';
 import ShelfPage from './components/ShelfPage/ShelfPage';
-import UserPage2 from './components/UserPage2/UserPage2';
+import UserPage from './components/UserPage/UserPage';
 import ShelfTwoPage from './components/ShelfTwoPage/ShelfTwoPage';
 
 import './styles/main.css';
@@ -40,7 +40,7 @@ const App = () => (
         />
         <Route
           path="/user"
-          component={UserPage2}
+          component={UserPage}
         />
         <Route
           path="/shelfTwo"

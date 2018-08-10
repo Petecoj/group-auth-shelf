@@ -112,7 +112,6 @@ class ShelfPage extends Component {
       </div>
     })
 
-
     if (this.props.user.userName && this.state.show) {
       content = (
         <div>
@@ -124,8 +123,6 @@ class ShelfPage extends Component {
           <button onClick={this.editSubmit}>Submit</button>
           <div>{itemListArray}</div>
         </div>
-
-
       );
     } else {
       content = (
@@ -141,8 +138,7 @@ class ShelfPage extends Component {
     return (
       <div>
         <Nav />
-        {content}
-
+        { content }
       </div>
     );
   }
