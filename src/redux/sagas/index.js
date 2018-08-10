@@ -19,7 +19,7 @@ export default function* rootSaga() {
 function* updateItem(action) {
   console.log('sage update', action.payload, action.id)
   try {
-    yield call(axios.put, `/api/shelf/${action.payload}`, action.payload);
+    yield call(axios.put, `/api/shelf/${action.id}`, action.payload);
     // yield dispatch({
     //   type: 'GET_LIST'
     // })
