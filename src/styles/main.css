@@ -8,7 +8,7 @@ body {
 }
 
 .instructions {
-    background-color: #00acb0;
+    background-color: #070607;
     padding: 5px;
     color: #ece7e7;
 }
@@ -48,7 +48,7 @@ input[type="submit"] {
 }
 
 .navbar {
-  background-color: #00acb0;
+  background-color: #050505;
   width: 100%;
   border-radius: 0px;
 }
@@ -81,4 +81,7 @@ li a:hover {
 img{
     height: auto;
     width: 200px;
+}
+h1{
+    text-align: center;
 }

@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Nav from '../../components/Nav/Nav';
-import { USER_ACTIONS } from '../../redux/actions/userActions';
+// import { USER_ACTIONS } from '../../redux/actions/userActions';
 import './ShelfPage.css';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 //views
 //link to the add page
@@ -12,6 +15,21 @@ const mapStateToProps = state => ({
   user: state.user,
   state
 });
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
+});
+
 
 class ShelfPage extends Component {
   constructor(props) {
@@ -78,13 +96,19 @@ class ShelfPage extends Component {
 
   render() {
     let content = null;
+    const { classes } = this.props;
 
     let itemListArray = this.props.state.itemList.map((item, index) => {
       return <div key={index} className="card">
         <img src={item.image_url} alt="Item" />
         <p>{item.description}</p>
-        <button onClick={() => this.handleDelete(item)}>Delete</button>
-        <button onClick={() => this.handleShow(item.id)}>click</button>
+        <Button onClick={()=> this.handleDelete(item)} variant="contained" color="secondary" className={classes.button}>
+        <DeleteIcon className={classes.rightIcon} />
+      </Button>
+      <Button onClick={() => this.handleShow(item.id)} variant="contained" color="primary" className={classes.margin}>
+          EDIT
+        </Button>
+        {/* <button onClick={() => this.handleShow(item.id)}>click</button> */}
       </div>
     })
 
@@ -124,5 +148,7 @@ class ShelfPage extends Component {
   }
 }
 
+const StyledShelfPage =withStyles(styles)(ShelfPage)
+
 // this allows us to use <App /> in index.js
-export default connect(mapStateToProps)(ShelfPage);
+export default connect(mapStateToProps)(StyledShelfPage);
