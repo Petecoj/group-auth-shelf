@@ -63,6 +63,19 @@ router.delete('/:id', (req, res) => {
  */
 router.put('/:id', (req, res) => {
     // UPDATE "crew" SET "name" = $1, "role" = $2, "ship_id"= $3 WHERE "id" = $4;
+    if (req.isAuthenticated) {
+        const queryText = `Update "item" SET "description" = $1, "image_url" = $2 WHERE id=$3`;
+        pool.query(queryText, [req.body.description, req.body.image_url, req.params.id])
+          .then(() => { res.sendStatus(200); })
+          .catch((err) => {
+            console.log('Error updating', err);
+            res.sendStatus(500);
+          });
+    } else {
+        res.sendStatus(403);
+    }
+    
+
 });
 
 

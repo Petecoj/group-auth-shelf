@@ -68,7 +68,6 @@ editSubmit = () => {
   })
 }
 
-
   render() {
     let content = null;
 
@@ -80,6 +79,7 @@ editSubmit = () => {
                 <button onClick={()=>this.handleShow(item.id)}>click</button>
             </div>
     })   
+    
 
     if (this.props.user.userName && this.state.show) {
       content = (
@@ -92,6 +92,8 @@ editSubmit = () => {
           <button onClick={this.editSubmit}>Submit</button>
           <div>{itemListArray}</div>
         </div>
+
+        
       );
     } else {
       content = (
