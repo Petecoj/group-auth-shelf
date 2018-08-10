@@ -17,7 +17,9 @@ class ShelfPage extends Component {
   constructor(props){
     super(props)
       this.state ={ 
-        show: false
+        show: false,
+        id: [],
+        editItem: [],
       }
   }
   componentDidMount() {
@@ -37,52 +39,47 @@ class ShelfPage extends Component {
     })
 }
 
-handleShow = (event) => {
-  console.log('click', this.state.show);
+handleShow = (itemId) => {
+  console.log('click', this.state.show, itemId);
   this.setState({
-   show: this.show = !this.show
-  })
-}
+   show: this.show = !this.show,
+   id : itemId,
+  },
+
+)}
+
 handleChangeFor = (propertyName) => {
   return (event ) => {
     this.setState({
-      newItem : {
-        ...this.state.newItem,
+      editItem : {
+        ...this.state.editItem,
         [propertyName] : event.target.value
       }
     })
   }
 }
 
-addItem = () => {
+editSubmit = () => {
+  console.log('edit submit', this.state.editItem)
   this.props.dispatch({
-    type: 'POST_ITEM',
-    payload: this.state.newItem
+    type: 'UPDATE_ITEM',
+    payload: this.state.editItem,
+    id: this.state.id
   })
 }
 
 
   render() {
     let content = null;
- 
-
 
     let itemListArray = this.props.state.itemList.map ((item, index) => {
       return <div key={index} className="card">
                 <img src = {item.image_url} alt="Item"/>
                 <p>{item.description}</p>
                 <button onClick={()=>this.handleDelete(item)}>Delete</button> 
-                <button onClick={()=>this.handleShow()}>click</button>
+                <button onClick={()=>this.handleShow(item.id)}>click</button>
             </div>
     })   
-    
-    // if (this.show == true){
-    //  return <input placeholder="description" onChange={this.handleChangeFor("description")}/>
-    //   <input placeholder="image URL" onChange={this.handleChangeFor("imageURL")}/>
-    //   <button onClick={this.addItem}>Submit</button>
-    // }
-
-    // && this.show ===false
 
     if (this.props.user.userName && this.state.show) {
       content = (
@@ -90,11 +87,9 @@ addItem = () => {
           <p>
             Info Page
           </p>
-          <div onClick={this.handleShow}>
           <input placeholder="description" onChange={this.handleChangeFor("description")}/>
           <input placeholder="image URL" onChange={this.handleChangeFor("imageURL")}/>
-          <button onClick={this.addItem}>Submit</button>
-          </div>
+          <button onClick={this.editSubmit}>Submit</button>
           <div>{itemListArray}</div>
         </div>
       );
@@ -104,8 +99,6 @@ addItem = () => {
           <p>
             Info Page
           </p>
-          <div onClick={this.handleShow}>
-        </div>
           <div>{itemListArray}</div>
         </div>
       )
