@@ -61,6 +61,17 @@ addItem = () => {
   })
 }
 
+// editItem = (item)=>{ 
+//   this.setState({
+//     show: this.show = !this.show
+//    })
+//   console.log(item);
+//   // this.props.dispatch({
+//   //   type: 'EDIT_ITEM',
+//   //   payload: 
+//   // })
+
+// }
 
   render() {
     let content = null;
@@ -76,13 +87,6 @@ addItem = () => {
             </div>
     })   
     
-    // if (this.show == true){
-    //  return <input placeholder="description" onChange={this.handleChangeFor("description")}/>
-    //   <input placeholder="image URL" onChange={this.handleChangeFor("imageURL")}/>
-    //   <button onClick={this.addItem}>Submit</button>
-    // }
-
-    // && this.show ===false
 
     if (this.props.user.userName && this.state.show) {
       content = (
@@ -90,13 +94,15 @@ addItem = () => {
           <p>
             Info Page
           </p>
-          <div onClick={this.handleShow}>
+          <div>
           <input placeholder="description" onChange={this.handleChangeFor("description")}/>
           <input placeholder="image URL" onChange={this.handleChangeFor("imageURL")}/>
           <button onClick={this.addItem}>Submit</button>
           </div>
           <div>{itemListArray}</div>
         </div>
+
+        
       );
     } else {
       content = (
