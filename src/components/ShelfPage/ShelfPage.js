@@ -64,6 +64,8 @@ addItem = () => {
 
   render() {
     let content = null;
+ 
+
 
     let itemListArray = this.props.state.itemList.map ((item, index) => {
       return <div key={index} className="card">
@@ -80,8 +82,9 @@ addItem = () => {
     //   <button onClick={this.addItem}>Submit</button>
     // }
 
+    // && this.show ===false
 
-    if (this.props.user.userName) {
+    if (this.props.user.userName && this.state.show) {
       content = (
         <div>
           <p>
@@ -95,6 +98,17 @@ addItem = () => {
           <div>{itemListArray}</div>
         </div>
       );
+    } else {
+      content = (
+        <div>
+          <p>
+            Info Page
+          </p>
+          <div onClick={this.handleShow}>
+        </div>
+          <div>{itemListArray}</div>
+        </div>
+      )
     }
 
     return (
